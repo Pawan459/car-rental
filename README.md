@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bolttech Carental Frontend
 
-## Getting Started
+This is the frontend application for the Bolttech Carental system. It is built with Next.js 15 using the new App Router, Tailwind CSS for styling, and React for interactive UI components. The frontend communicates with a separate Express backend via RESTful APIs for user authentication, car search, and booking management.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **User Authentication:**  
+  Users can sign up and log in. JWT tokens are used to secure API calls.
+- **Car Search:**  
+  Users can search for available cars by specifying start and end dates.
+- **Booking Management:**  
+  Authenticated users can view their bookings and create new bookings.
+- **Responsive UI:**  
+  Styled with Tailwind CSS for a clean, modern look.
+- **Component-based Architecture:**  
+  Reusable components are built as interactive islands for optimal performance.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js (v20 or later)
+- pnpm or yarn
+- A running backend API (see the backend README for setup instructions)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup
 
-## Learn More
+1. **Clone and Install Dependencies:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   cd frontend
+   pnpm install
+   # or using yarn:
+   # yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Configure Environment Variables:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   Create a `.env.local` file in the frontend root with, for example:
 
-## Deploy on Vercel
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:5000
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   This variable is used to direct API calls to your backend server.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Run the Development Server:**
+
+   ```bash
+   pnpm run dev
+   # or using yarn:
+   # yarn dev
+   ```
+
+   The application will run at [http://localhost:3000](http://localhost:3000).
+
+4. **Build for Production:**
+
+   Build and start the application with:
+
+   ```bash
+   pnpm run build
+   pnpm start
+   ```
+
+## API Communication
+
+The frontend uses a central API service class to make calls to the backend. Examples of available API calls include:
+
+- **Login:** POST request to `/api/auth/login` with email and password.
+- **Register:** POST request to `/api/auth/register` with email, name, and password.
+- **Get a Car by ID:** GET request to `/api/cars/<carId>`.
+- **My Bookings:** GET request to `/api/bookings` (with JWT in the header).
+- **Book a Car:** POST request to `/api/bookings` with booking details (with JWT in the header).
+- **Available Cars:** GET request to `/api/cars` with `startDate` and `endDate` as query parameters.
+
+All API calls use the base URL specified in the `NEXT_PUBLIC_API_URL` environment variable.
+
+## Frontend UI Overview
+
+- **Global Layout:**  
+  The application uses a common layout that includes a header and footer for navigation.
+- **Authentication Pages:**  
+  Separate sign-in and registration pages that use reusable form components.
+- **Car Search Page:**  
+  The home page offers a car search form (an interactive client component) along with a list of available cars.
+- **Booking Pages:**  
+  - A page to display the logged-in user’s bookings.
+  - A page to create a new booking through an interactive form.
+
+## Additional Notes
+
+- Tailwind CSS is used for styling; all global styles are defined in `globals.css`.
+- The application adheres to an islands architecture, separating interactive client components from static server-rendered content.
+- For improved security, consider using HTTP-only cookies rather than localStorage for storing JWT tokens in production.
+- Ensure the backend API is running and reachable from the frontend based on your configured `NEXT_PUBLIC_API_URL`.
+
+Happy Coding!
