@@ -1,0 +1,2 @@
+export const PRODUCT_NAME = 'Car Rental';
+export const PRODUCT_DESCRIPTION = 'Car Rental is a web application that allows users to book cars online. It provides a user-friendly interface for searching, selecting, and booking cars for rental.';
